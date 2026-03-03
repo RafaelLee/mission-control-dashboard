@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --openclaw-primary: #6366f1;
+  --openclaw-dark: #1e293b;
+  --openclaw-light: #f1f5f9;
+}
+
+.dark {
+  --openclaw-dark: #f1f5f9;
+  --openclaw-light: #1e293b;
+}
+
+.activity-item {
+  transition: all 0.2s ease;
+}
+
+.activity-item:hover {
+  @apply bg-openclaw-light dark:bg-openclaw-dark/30;
+}

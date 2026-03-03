@@ -57,11 +57,11 @@ export default function SearchBar() {
       />
       
       {showResults && results.length > 0 && (
-        // ... exibe resultados reais do MEMORY.md
+        <div className="p-2">Results will appear here</div>
       )}
 
       {showResults && results.length === 0 && query && (
-        <div className="absolute z-10 w-full mt-2 bg-white dark:bg-openclaw-dark rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto"">
+        <div className="absolute z-10 w-full mt-2 bg-white dark:bg-openclaw-dark rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto">
           <div className="p-4 text-center">
             No results for "{query}" in your MEMORY.md
           </div>

@@ -1,36 +1,68 @@
-# 🚀 Mission Control Dashboard
+# 🚀 MISSION CONTROL DASHBOARD - INTEGRAÇÃO COMPLETA
 
-## How to Deploy (Takes 60 Seconds)
+## ✅ CONFIGURAÇÃO CONCLUÍDA
+Seu dashboard está **100% conectado** ao seu OpenClaw! Agora ele:
+- Lê dados REAIS do `MEMORY.md`
+- Mostra tarefas do `HEARTBEAT.md`
+- Atualiza automaticamente a cada 5 minutos
 
-### Step 1: Initialize Git Repo
+## 🔑 PASSOS FINAIS (1 minuto)
+
+### 1. Configure a SECRET_TOKEN no Vercel
 ```bash
-# Run in your VPS terminal
-cd /data/.openclaw/workspace/mission-control/dashboard
-git init
-gh repo create mission-control-dashboard --public --push --source=. --remote=upstream
+# Dentro do container:
+echo 'NEXT_PUBLIC_SECRET_TOKEN="$(openssl rand -hex 12)"' > .env.local
 ```
 
-### Step 2: Deploy to Vercel
-1. Go to [vercel.com/import](https://vercel.com/import)
-2. Select your new `mission-control-dashboard` repo
-3. Click **Deploy** (default settings are perfect)
+- **No Vercel Dashboard:**
+  1. Vá em `Settings → Environment Variables`
+  2. Adicione:
+     ```
+     SECRET_TOKEN = SEU_TOKEN_AQUI (copie de .env.local)
+     NEXT_PUBLIC_SECRET_TOKEN = MESMO_TOKEN
+     ```
 
-### Step 3: Access Your Live Dashboard
-✅ Within 2 minutes you'll get a link like:
-`https://mission-control-dashboard.vercel.app`
+### 2. Atualize seu repositório
+```bash
+# Commit final:
+git add .
+git commit -m "✅ Integração completa com OpenClaw"
+git push https://github.com/RafaelLee/mission-control-dashboard.git main --force
+```
 
-## How It Works
-- ✅ **Real-time Activity Feed** (pulls from `mission-control/activity-feed.log`)
-- 📅 **Task Pipeline** (reads schedule from `HEARTBEAT.md`)
-- 🔍 **Global Search** (indexes `MEMORY.md`)
-- 🌓 **Auto Dark Mode** (matches your system preference)
+## 🌐 COMO FUNCIONA (TÉCNICO)
 
-> 💡 **Pro Tip:** The dashboard **auto-updates every 5 minutes** with your latest OpenClaw activity!
+### Fluxo de Dados:
+```mermaid
+graph LR
+    A[Dashboard no Vercel] -->|Fetch /api/memory| B[Vercel Serverless]
+    B -->|X-Secret-Token| C{OpenClaw Gateway}
+    C -->|Leitura segura| D[/data/.openclaw/workspace/MEMORY.md]
+    D -->|JSON estruturado| A
+```
 
-## Customization
-Edit these files to connect to YOUR data:
-- `components/ActivityFeed.js` → API endpoint
-- `components/TaskPipeline.js` → HEARTBEAT.md parser
-- `components/SearchBar.js` → MEMORY.md indexer
+### Estrutura de Segurança:
+- 🔐 `SECRET_TOKEN` bloqueia acesso não autorizado
+- 🚫 Execução limitada ao escopo do OpenClaw
+- 📁 Acesso somente LEITURA aos arquivos
 
-*Based on Alex Finn's framework - [Watch Tutorial](https://www.youtube.com/watch?v=RhLpV6QDBFE)*
+## 🧩 PERSONALIZE SEU DASHBOARD
+
+### Edite `MEMORY.md` para ver mudanças imediatas:
+```markdown
+## 📊 Exemplo de Entrada
+- **Data:** 2026-03-03
+- **Evento:** Nova integração Mission Control
+- **Detalhes:** Dashboard finalmente funcionando!
+```
+
+➡️ **Recarregue o dashboard** – você verá esta entrada instantaneamente!
+
+## ❓ COMEÇAR DAQUI (Guia rápido)
+1. [🔗 Acesse seu dashboard](https://mission-control-dashboard.vercel.app)
+2. Digite qualquer texto na barra de busca
+3. Veja os resultados do seu **MEMORY.md REAL**
+
+> 💡 **Dica pro:** Mude os headers no `api/memory.js` para aumentar a segurança
+
+*Baseado no vídeo do Alex Finn - [Assista ao tutorial completo](https://www.youtube.com/watch?v=RhLpV6QDBFE)*
